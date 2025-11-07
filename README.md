@@ -38,7 +38,7 @@ This is a simple UNet implementation to run on your own computer or Google Colab
 
 <img width="284" height="115" alt="Skjermbilde 2025-11-07 213642" src="https://github.com/user-attachments/assets/e6cb66ae-c862-44b6-ad23-2b9bc05da1ac" />
 
-4. Get a copy of the UNet_PyTorch_colab.ipynb file, store it in Google Drive - My Drive - Colab Notebooks and open and run it in Google Colab
+4. Get a copy of the UNet_PyTorch_colab.ipynb file, store it in Google Drive - My Drive - Colab Notebooks and open and run it block by block in Google Colab
 
 5. Remember to set the variables:
 
