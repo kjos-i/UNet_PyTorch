@@ -32,8 +32,6 @@ This is a simple UNet implementation to run on your own computer or Google Colab
 
 2. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this on Google Drive: 
 
-<img width="220" height="153" alt="Skjermbilde 2025-11-07 203630" src="https://github.com/user-attachments/assets/bc13a00d-c9f6-48e9-92b9-e4bf5317411a" />
-
-<img width="440" height="199" alt="Skjermbilde 2025-11-07 212813" src="https://github.com/user-attachments/assets/4d2af453-a35a-44cd-b5b0-1038324b5d1a" />
+<img width="336" height="187" alt="Skjermbilde 2025-11-07 212951" src="https://github.com/user-attachments/assets/38dbc926-025d-4a86-b690-333c948399ba" />
 
 
