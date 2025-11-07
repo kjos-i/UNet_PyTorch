@@ -7,7 +7,7 @@ This is a very simple UNet implementation
 
 1. For this UNet implementation, the image masks must be binary with background = 0 and class label = 1
 
-2. Make sure to have a separate test dataset. Arrange your training (training and validation combined) dataset images and masks like this: 
+2. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this: 
 
 <img width="220" height="153" alt="Skjermbilde 2025-11-07 203630" src="https://github.com/user-attachments/assets/bc13a00d-c9f6-48e9-92b9-e4bf5317411a" />
 
