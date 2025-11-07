@@ -35,3 +35,4 @@ This is a simple UNet implementation to run on your own computer or Google Colab
 <img width="336" height="187" alt="Skjermbilde 2025-11-07 212951" src="https://github.com/user-attachments/assets/38dbc926-025d-4a86-b690-333c948399ba" />
 
 
+<img width="441" height="238" alt="Skjermbilde 2025-11-07 213123" src="https://github.com/user-attachments/assets/1ad221b3-15d9-45e2-813f-2218b8f8c08e" />
