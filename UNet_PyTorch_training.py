@@ -16,21 +16,24 @@ from UNet_PyTorch_dataset import MyDataset
 from UNet_PyTorch_model import UNet
 from UNet_PyTorch_matplotlib import val_image_mask, train_loss_iou_dice_acc_graph
 
+"""
+UNet set up for segmentation of binary images (background = 0, class label = 1)
+"""
 
 # SET VARIABLES
-ROOT_PATH_DATASET = ""
-TRANSFORM = "transform"
-LIMIT = 100 
-BATCH_SIZE = 4
+ROOT_PATH_DATASET = "C:/Users/kjosi/Python/carvana_dataset" # Path to main dataset folder  
+TRANSFORM = "transform" # OR "transform_augmentation", but make sure it works on dataset!!
+LIMIT = 10 # The nr of images included from dataset, to include all set value to None
+BATCH_SIZE = 1
 EPOCHS = 10
-LEARNING_RATE = 0.0001
-WEIGHT_DECAY = 0.01 
-LR_S_STEP_SIZE = 5 
-LR_S_GAMMA = 0.1 
-PROBABILITY = 0.5 
-DICE_INCLUDE_BACKGROUND = True 
-ROOT_PATH_SAVE = ""
-CHECKPOINT_PATH = None # Insert string for checkpoint
+LEARNING_RATE = 0.0001 # For AdamW optimizer learning rate (LR), PyTorch default 0.001
+WEIGHT_DECAY = 0.01 # For AdamW optimizer, PyTorch default 0.01
+LR_S_STEP_SIZE = 5 # For LR scheduler StepLR, nr of epochs before applying gamma decay
+LR_S_GAMMA = 0.1 # For LR scheduler StepLR (LR * gamma = new LR), PyTorch default 0.1
+THRESHOLD = 0.5 # Threshold for binary class prediction
+DICE_INCLUDE_BACKGROUND = True # TorchMetrics dice score calculation, default True
+ROOT_PATH_SAVE = "C:/Users/kjosi/Python" # Path where results folder will be created
+CHECKPOINT_PATH = None # Path to checkpoint file with saved model, optimizer and scheduler parameters
 
 
 # SET DEVICE, RUN ON CUDA IF AVAILABLE 
@@ -294,6 +297,7 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
 
 
 
