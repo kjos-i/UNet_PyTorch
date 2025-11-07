@@ -1,9 +1,9 @@
 # UNet implementation using PyTorch
 
-This is a very simple UNet implementation 
+This is a simple UNet implementation to run on your own computer or Google Colab
 
 
-## Quick start
+## Quick start to run on your own computer
 
 1. For this UNet implementation, the image masks must be binary with background = 0 and class label = 1
 
@@ -24,3 +24,16 @@ This is a very simple UNet implementation
 6. Run the UNet_PyTorch_training.py file
 
 7. The results will be stored in a new folder at the specified save path
+
+
+## Quick start to run with Google Colab
+
+1. For this UNet implementation, the image masks must be binary with background = 0 and class label = 1
+
+2. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this on Google Drive: 
+
+<img width="220" height="153" alt="Skjermbilde 2025-11-07 203630" src="https://github.com/user-attachments/assets/bc13a00d-c9f6-48e9-92b9-e4bf5317411a" />
+
+<img width="440" height="199" alt="Skjermbilde 2025-11-07 212813" src="https://github.com/user-attachments/assets/4d2af453-a35a-44cd-b5b0-1038324b5d1a" />
+
+
