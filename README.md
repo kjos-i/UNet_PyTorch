@@ -13,4 +13,4 @@ UNet was created by
 
 2. Download the four files into a folder
 
-<img width="433" height="283" alt="Skjermbilde 2025-11-07 205800" src="https://github.com/user-attachments/assets/200985d7-1f27-46d5-8719-ce5e53016743" />
+<img width="213" height="139" alt="Skjermbilde 2025-11-07 210211" src="https://github.com/user-attachments/assets/3f6fb4fd-ad77-494e-a4e1-a65f4b97a413" />
