@@ -2,11 +2,10 @@ import torch
 import torch.nn as nn
 
 """
-In the original paper implementation, the convolution operations were
-not padded but we are padding them here. This is because, we need the 
-output result size to be same as input size.
+This version of the UNet Model is by Sovit Ranjan Rath, copied from:
+https://debuggercafe.com/unet-from-scratch-using-pytorch/
 
-Also added BatchNorm2d
+Implemented with padding and BatchNorm2d
 """
 
 class DoubleConv(nn.Module):
@@ -94,4 +93,5 @@ if __name__ == '__main__':
     print(f"{total_trainable_params:,} training parameters.")
     outputs = model(input_image)
     print(outputs.shape)
+
     
