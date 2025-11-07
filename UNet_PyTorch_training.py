@@ -18,7 +18,7 @@ from UNet_PyTorch_utils import val_image_mask, train_loss_iou_dice_acc_graph
 
 
 # SET VARIABLES
-ROOT_PATH_DATASET = "C:/Users/kjosi/Python/carvana_dataset"
+ROOT_PATH_DATASET = ""
 TRANSFORM = "transform"
 LIMIT = 20 
 BATCH_SIZE = 2
@@ -29,8 +29,8 @@ LR_S_STEP_SIZE = 5
 LR_S_GAMMA = 0.1 
 PROBABILITY = 0.5 
 DICE_INCLUDE_BACKGROUND = True 
-ROOT_PATH_SAVE = "C:/Users/kjosi/Python"
-CHECKPOINT_PATH = "C:/Users/kjosi/Python/UNet_training_results_4/checkpoint_9.pth"
+ROOT_PATH_SAVE = ""
+CHECKPOINT_PATH = ""
 
 
 # SET DEVICE, RUN ON CUDA IF AVAILABLE 
@@ -293,3 +293,4 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
