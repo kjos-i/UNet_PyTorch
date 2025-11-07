@@ -267,7 +267,7 @@ lists = [epochs_list, train_losses, val_losses, train_ious, val_ious,
          train_dices, val_dices, train_accs, val_accs, lr_updates]
 titles = ["Epoch", "Train loss", "Val loss", "Train IoU", "Val IoU", 
           "Train dice", "Val dice", "Train acc", "Val acc", "Updated LR"]
-training_results_dictionary = dict([(key, value) for key, value in zip(titles, lists)])
+training_results_dictionary = dict(zip(titles, lists))
 df = pd.DataFrame(training_results_dictionary)
 df.to_csv((os.path.join(save_path, "training_dataframe.csv")), index=False)
 print("-" * 5)
@@ -294,5 +294,6 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
 
 
