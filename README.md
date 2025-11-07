@@ -40,5 +40,8 @@ This is a simple UNet implementation to run on your own computer or Google Colab
 
 4. Get a copy of the UNet_PyTorch_colab.ipynb file, store it in Google Drive - My Drive - Colab Notebooks and open and run it in Google Colab
 
-5. Set variables as explained
+5. Remember to set the variables:
+
+<img width="834" height="276" alt="Skjermbilde 2025-11-07 214459" src="https://github.com/user-attachments/assets/cb3abddc-43da-4901-8b72-7fabb7c129a4" />
+
 
