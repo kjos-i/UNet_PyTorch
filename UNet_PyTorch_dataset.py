@@ -10,7 +10,7 @@ class MyDataset(Dataset):
         
         self.root_path = root_path
         self.limit = limit
-        self.images = sorted([root_path + "/train/" + i for i in os.listdir(root_path + "/train/")])[:self.limit]
+        self.images = sorted([root_path + "/train_imgs/" + i for i in os.listdir(root_path + "/train_imgs/")])[:self.limit]
         self.masks = sorted([root_path + "/train_masks/" + i for i in os.listdir(root_path + "/train_masks/")])[:self.limit]
 
         if transform == "transform_augmentation":
@@ -41,3 +41,4 @@ class MyDataset(Dataset):
 
     def __len__(self):
         return min(len(self.images), self.limit)
+
