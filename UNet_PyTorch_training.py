@@ -21,7 +21,7 @@ UNet set up for segmentation of binary images (background = 0, class label = 1)
 """
 
 # SET VARIABLES
-ROOT_PATH_DATASET = "" # Path to main dataset folder  
+ROOT_PATH_DATASET = "" # Path to "dataset" folder  
 TRANSFORM = "transform" # OR "transform_augmentation", but make sure it works on dataset!!
 LIMIT = 200 # The nr of images included from dataset, to include all set value to None
 BATCH_SIZE = 10
@@ -299,3 +299,4 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
