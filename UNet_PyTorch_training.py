@@ -30,7 +30,7 @@ LR_S_GAMMA = 0.1
 PROBABILITY = 0.5 
 DICE_INCLUDE_BACKGROUND = True 
 ROOT_PATH_SAVE = ""
-CHECKPOINT_PATH = ""
+CHECKPOINT_PATH = None # Insert string for checkpoint
 
 
 # SET DEVICE, RUN ON CUDA IF AVAILABLE 
@@ -82,10 +82,11 @@ criterion = nn.BCEWithLogitsLoss()
 optimizer = optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 scheduler = lr_scheduler.StepLR(optimizer, step_size=LR_S_STEP_SIZE, gamma=LR_S_GAMMA) 
 
-#checkpoint = torch.load(CHECKPOINT_PATH)
-#model.load_state_dict(checkpoint['model_state_dict'])
-#optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-#scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
+if CHECKPOINT_PATH != None:
+    checkpoint = torch.load(CHECKPOINT_PATH)
+    model.load_state_dict(checkpoint['model_state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+    scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
 
 model_name = model.__class__.__name__
 optimizer_name = optimizer.__class__.__name__
@@ -293,3 +294,4 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
