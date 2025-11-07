@@ -26,13 +26,15 @@ This is a simple UNet implementation to run on your own computer or Google Colab
 7. The results will be stored in a new folder at the specified save path
 
 
-## Quick start to run with Google Colab
+## Quick start to run using Google Colab
 
 1. For this UNet implementation, the image masks must be binary with background = 0 and class label = 1
 
 2. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this on Google Drive: 
 
-<img width="336" height="187" alt="Skjermbilde 2025-11-07 212951" src="https://github.com/user-attachments/assets/38dbc926-025d-4a86-b690-333c948399ba" />
-
-
 <img width="441" height="238" alt="Skjermbilde 2025-11-07 213123" src="https://github.com/user-attachments/assets/1ad221b3-15d9-45e2-813f-2218b8f8c08e" />
+
+3. Download the three .py files:
+
+<img width="284" height="115" alt="Skjermbilde 2025-11-07 213642" src="https://github.com/user-attachments/assets/e6cb66ae-c862-44b6-ad23-2b9bc05da1ac" />
+
