@@ -207,6 +207,7 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
     val_dice_sum = 0
     val_acc_sum = 0
     nr_of_val_loss_items = 0
+    
     with torch.no_grad():
         for idx, img_mask in enumerate(tqdm(val_dataloader, "BATCH VAL", position=0, leave=True)):
             img = img_mask[0].float().to(device)
@@ -305,6 +306,7 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
 
 
 
