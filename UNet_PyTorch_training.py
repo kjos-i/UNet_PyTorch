@@ -17,7 +17,10 @@ from UNet_PyTorch_model import UNet
 from UNet_PyTorch_utils import val_image_mask, train_loss_iou_dice_acc_graph
 
 """
-UNet set up for segmentation of binary images (background = 0, class label = 1)
+This is a modified version of the UNet implementation by found here:
+https://medium.com/@fernandopalominocobo/mastering-u-net-a-step-by-step-guide-to-segmentation-from-scratch-with-pytorch-6a17c5916114
+
+UNet set up for segmentation of binary images (background = 0, foreground = 255)
 Image is resized to 512 x 512 and converted to RGB
 Mask is resized to 512 x 512 and converted to grayscale
 """
@@ -63,7 +66,7 @@ ROOT_PATH_DATASET = ROOT_PATH_DATASET
 TRANSFORM = TRANSFORM
 LIMIT = LIMIT
 dataset = MyDataset(root_path=ROOT_PATH_DATASET, transform=TRANSFORM, limit=LIMIT)
-generator = torch.Generator().manual_seed(25)
+generator = torch.Generator().manual_seed(55)
 
 train_dataset, val_dataset = random_split(dataset, [0.8, 0.2], generator=generator)
 
@@ -303,6 +306,7 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
 
 
 
