@@ -1,31 +1,31 @@
 # UNet implementation using PyTorch
 
-### This is a simple UNet implementation to run on your own computer or Google Colab
+This is a simple UNet implementation to run on your own computer or Google Colab
+<br>
+
 U-Net: Convolutional Networks for Biomedical Image Segmentation
 Olaf Ronneberger, Philipp Fischer, Thomas Brox
 Submitted on 18 May 2015
-Original image size used: 572x572
 <br>
 
+UNet for binary segmentation (background = 0, foreground = 255)
+For this UNet implementation, the image masks must be binary with background = 0 and foreground = 1
+Image is resized to 512 x 512 and converted to RGB
+Mask is resized to 512 x 512 and converted to grayscale
+<br>
 
-## Quick start to run on your own computer
+## Quick start to run on your own computer 
 
-### 1. For this UNet implementation, the image masks must be binary with background = 0 and foreground = 1
-
-### 2. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this: 
-
+1. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this: 
 <img width="220" height="153" alt="Skjermbilde 2025-11-07 203630" src="https://github.com/user-attachments/assets/bc13a00d-c9f6-48e9-92b9-e4bf5317411a" />
 
-### 3. Download the four .py files to one folder:
-
+2. Download the four .py files to one folder:
 UNet_PyTorch_training.py <br>
 UNet_PyTorch_model.py <br>
 UNet_PyTorch_dataset.py <br>
 UNet_PyTorch_utils.py <br>
 
-
-### 4. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables:
-
+3. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables:
 ROOT_PATH_DATASET: "" - Path to "dataset" folder <br>
 TRANSFORM: "transform" OR "transform_augmentation", but make sure it works on dataset!! <br>
 LIMIT: The nr of images included from dataset, to include all set value to None <br>
@@ -42,32 +42,20 @@ DICE_INCLUDE_BACKGROUND: TorchMetrics dice score calculation, default True <br>
 ROOT_PATH_SAVE = "" - Path where results folder will be created <br>
 CHECKPOINT_PATH: Path to checkpoint file with saved model, optimizer and scheduler parameters (optional) <br>
 
-### 5. Check that the Python environment has all necessary packages installed, otherwise install them
-
-### 6. Run the UNet_PyTorch_training.py file
-
-### 7. The results will be stored in a new folder at the specified save path
+4. Check that the Python environment has all necessary packages installed, otherwise install them
+5. Run the UNet_PyTorch_training.py file
+6. The results will be stored in a new folder at the specified save path
 <br>
 
-  
 ## Quick start to run using Google Colab
 
-### 1. For this UNet implementation, the image masks must be binary with background = 0 and class label = 1
-
-### 2. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this on Google Drive: 
-
+1. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this on Google Drive: 
 <img width="441" height="238" alt="Skjermbilde 2025-11-07 213123" src="https://github.com/user-attachments/assets/1ad221b3-15d9-45e2-813f-2218b8f8c08e" />
 
-### 3. Download the three .py files:
-
+2. Download the three .py files:
 UNet_PyTorch_model.py <br>
 UNet_PyTorch_dataset.py <br>
 UNet_PyTorch_utils.py <br>
 
-### 4. Get a copy of the UNet_PyTorch_colab.ipynb file, store it in Google Drive - My Drive - Colab Notebooks and open and run it block by block in Google Colab
-
-### 5. Remember to set the variables:
-
-<img width="834" height="276" alt="Skjermbilde 2025-11-07 214459" src="https://github.com/user-attachments/assets/cb3abddc-43da-4901-8b72-7fabb7c129a4" />
-
-
+3. Get a copy of the UNet_PyTorch_colab.ipynb file, store it in Google Drive - My Drive - Colab Notebooks and open and run it block by block in Google Colab
+4. Remember to set the variables as explained under "Quick start to run on your own computer - point 3"
