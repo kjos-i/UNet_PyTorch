@@ -26,6 +26,8 @@ TRANSFORM = "transform" # OR "transform_augmentation", but make sure it works on
 LIMIT = 200 # The nr of images included from dataset, to include all set value to None
 BATCH_SIZE = 10
 EPOCHS = 100
+INPUT_CHANNELS = 3 # Number of channels in input images
+NUM_CLASSES = 1 # For this inplementation the number of classes should be 1
 LEARNING_RATE = 0.001 # For AdamW optimizer learning rate (LR), PyTorch default 0.001
 WEIGHT_DECAY = 0.01 # For AdamW optimizer, PyTorch default 0.01
 LR_S_STEP_SIZE = 30 # For LR scheduler StepLR, nr of epochs before applying gamma decay
@@ -78,10 +80,10 @@ val_dataloader = DataLoader(dataset=val_dataset,
 
 
 # SET MODEL COST FUNCTION, OPTIMIZER AND LEARNING RATE SCHEDULER
-in_channels = 3
-num_classes = 1 
+INPUT_CHANNELS = INPUT_CHANNELS
+NUM_CLASSES = NUM_CLASSES
 
-model = UNet(in_channels, num_classes).to(device)
+model = UNet(input_channels=INPUT_CHANNELS, num_classes=NUM_CLASSES).to(device)
 criterion = nn.BCEWithLogitsLoss()
 optimizer = optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 scheduler = lr_scheduler.StepLR(optimizer, step_size=LR_S_STEP_SIZE, gamma=LR_S_GAMMA) 
@@ -299,4 +301,5 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
 
