@@ -24,7 +24,7 @@ UNet_PyTorch_dataset.py <br>
 UNet_PyTorch_utils.py <br>
 
 3. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables: <br>
-ROOT_PATH_DATASET: "" - Path to "dataset" folder <br>
+ROOT_PATH_DATASET: Path to "dataset" folder <br>
 TRANSFORM: "transform" OR "transform_augmentation", but make sure it works on dataset!! <br>
 LIMIT: The nr of images included from dataset, to include all set value to None <br>
 BATCH_SIZE <br>
@@ -37,7 +37,7 @@ LR_S_STEP_SIZE: For LR scheduler StepLR, nr of epochs before applying gamma deca
 LR_S_GAMMA: For LR scheduler StepLR (LR * gamma = new LR), PyTorch default 0.1 <br>
 THRESHOLD: Threshold for binary class prediction <br>
 DICE_INCLUDE_BACKGROUND: TorchMetrics dice score calculation, default True <br>
-ROOT_PATH_SAVE = "" - Path where results folder will be created <br>
+ROOT_PATH_SAVE: Path where results folder will be created <br>
 CHECKPOINT_PATH: Path to checkpoint file with saved model, optimizer and scheduler parameters (optional) <br>
 
 4. Check that the Python environment has all necessary packages installed, otherwise install them
