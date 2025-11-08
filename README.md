@@ -8,8 +8,8 @@ Olaf Ronneberger, Philipp Fischer, Thomas Brox - Submitted on 18 May 2015 <br>
 
 UNet implementation for binary segmentation <br>
 The image masks must be binary with background = 0 and foreground = 1 <br>
-Image is resized to 512 x 512 and converted to RGB <br>
-Mask is resized to 512 x 512 and converted to grayscale
+Images are resized to 512 x 512 and converted to RGB <br>
+Masks are resized to 512 x 512 and converted to grayscale
 <br>
 
 ## Quick start to run on your own computer 
