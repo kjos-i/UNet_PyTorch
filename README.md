@@ -3,14 +3,14 @@
 This is a simple UNet implementation to run on your own computer or Google Colab
 <br>
 
-U-Net: Convolutional Networks for Biomedical Image Segmentation
-Olaf Ronneberger, Philipp Fischer, Thomas Brox
-Submitted on 18 May 2015
+U-Net: Convolutional Networks for Biomedical Image Segmentation <br>
+Olaf Ronneberger, Philipp Fischer, Thomas Brox <br>
+Submitted on 18 May 2015 <br>
 <br>
 
-UNet for binary segmentation (background = 0, foreground = 255)
-For this UNet implementation, the image masks must be binary with background = 0 and foreground = 1
-Image is resized to 512 x 512 and converted to RGB
+UNet for binary segmentation (background = 0, foreground = 255) <br>
+For this UNet implementation, the image masks must be binary with background = 0 and foreground = 1 <br>
+Image is resized to 512 x 512 and converted to RGB <br>
 Mask is resized to 512 x 512 and converted to grayscale
 <br>
 
@@ -19,13 +19,13 @@ Mask is resized to 512 x 512 and converted to grayscale
 1. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this: 
 <img width="220" height="153" alt="Skjermbilde 2025-11-07 203630" src="https://github.com/user-attachments/assets/bc13a00d-c9f6-48e9-92b9-e4bf5317411a" />
 
-2. Download the four .py files to one folder:
+2. Download the four .py files to one folder: <br>
 UNet_PyTorch_training.py <br>
 UNet_PyTorch_model.py <br>
 UNet_PyTorch_dataset.py <br>
 UNet_PyTorch_utils.py <br>
 
-3. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables:
+3. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables: <br>
 ROOT_PATH_DATASET: "" - Path to "dataset" folder <br>
 TRANSFORM: "transform" OR "transform_augmentation", but make sure it works on dataset!! <br>
 LIMIT: The nr of images included from dataset, to include all set value to None <br>
