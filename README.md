@@ -1,7 +1,11 @@
 # UNet implementation using PyTorch
 
 ### This is a simple UNet implementation to run on your own computer or Google Colab
-\
+U-Net: Convolutional Networks for Biomedical Image Segmentation
+Olaf Ronneberger, Philipp Fischer, Thomas Brox
+Submitted on 18 May 2015
+Original image size used: 572x572
+<br>
 
 
 ## Quick start to run on your own computer
@@ -22,14 +26,28 @@ UNet_PyTorch_utils.py <br>
 
 ### 4. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables:
 
-<img width="1244" height="429" alt="Skjermbilde 2025-11-07 210921" src="https://github.com/user-attachments/assets/f6d7a6ee-5748-44ec-83b6-3894e11579e3" />
+ROOT_PATH_DATASET: "" - Path to "dataset" folder <br>
+TRANSFORM: "transform" OR "transform_augmentation", but make sure it works on dataset!! <br>
+LIMIT: The nr of images included from dataset, to include all set value to None <br>
+BATCH_SIZE <br>
+EPOCHS <br>
+INPUT_CHANNELS: Number of channels in input images, dataset class converts to RGB image (3 channels) <br>
+NUM_CLASSES: For this inplementation the number of classes should be 1 <br>
+LEARNING_RATE: For AdamW optimizer learning rate (LR), PyTorch default 0.001 <br>
+WEIGHT_DECAY: For AdamW optimizer, PyTorch default 0.01 <br>
+LR_S_STEP_SIZE: For LR scheduler StepLR, nr of epochs before applying gamma decay <br>
+LR_S_GAMMA: For LR scheduler StepLR (LR * gamma = new LR), PyTorch default 0.1 <br>
+THRESHOLD: Threshold for binary class prediction <br>
+DICE_INCLUDE_BACKGROUND: TorchMetrics dice score calculation, default True <br>
+ROOT_PATH_SAVE = "" - Path where results folder will be created <br>
+CHECKPOINT_PATH: Path to checkpoint file with saved model, optimizer and scheduler parameters (optional) <br>
 
 ### 5. Check that the Python environment has all necessary packages installed, otherwise install them
 
 ### 6. Run the UNet_PyTorch_training.py file
 
 ### 7. The results will be stored in a new folder at the specified save path
-\
+<br>
 
   
 ## Quick start to run using Google Colab
