@@ -1,10 +1,9 @@
 # UNet implementation using PyTorch
 
-This is a simple UNet implementation to run on your own computer or Google Colab
+<sup>This is a simple UNet implementation to run on your own computer or Google Colab</sup>
 <br>
 <br>
-<br>
-<br>
+
 ## Quick start to run on your own computer
 
 ### 1. For this UNet implementation, the image masks must be binary with background = 0 and foreground = 1
