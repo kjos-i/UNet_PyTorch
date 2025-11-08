@@ -21,8 +21,8 @@ This is a modified version of the UNet implementation by found here:
 https://medium.com/@fernandopalominocobo/mastering-u-net-a-step-by-step-guide-to-segmentation-from-scratch-with-pytorch-6a17c5916114
 
 UNet implementation for binary segmentation (background = 0, foreground = 255)
-Image is resized to 512 x 512 and converted to RGB
-Mask is resized to 512 x 512 and converted to grayscale
+Images are resized to 512 x 512 and converted to RGB
+Masks are resized to 512 x 512 and converted to grayscale
 """
 
 # SET VARIABLES
@@ -306,6 +306,7 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
 
 
 
