@@ -2,7 +2,9 @@
 
 This is a simple UNet implementation to run on your own computer or Google Colab
 <br>
-
+<br>
+<br>
+<br>
 ## Quick start to run on your own computer
 
 ### 1. For this UNet implementation, the image masks must be binary with background = 0 and foreground = 1
@@ -27,9 +29,9 @@ UNet_PyTorch_utils.py <br>
 
 ### 6. Run the UNet_PyTorch_training.py file
 
-### 7. The results will be stored in a new folder at the specified save path
-<br>
-
+### 7. The results will be stored in a new folder at the specified save path  
+  
+  
 ## Quick start to run using Google Colab
 
 ### 1. For this UNet implementation, the image masks must be binary with background = 0 and class label = 1
