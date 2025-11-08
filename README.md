@@ -1,8 +1,8 @@
 # UNet implementation using PyTorch
 
-###This is a simple UNet implementation to run on your own computer or Google Colab
+### This is a simple UNet implementation to run on your own computer or Google Colab
 \
-\
+
 
 ## Quick start to run on your own computer
 
@@ -30,7 +30,7 @@ UNet_PyTorch_utils.py <br>
 
 ### 7. The results will be stored in a new folder at the specified save path
 \
-\
+
   
 ## Quick start to run using Google Colab
 
