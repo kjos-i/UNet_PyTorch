@@ -40,8 +40,7 @@ LR_S_GAMMA = 0.1 # For LR scheduler StepLR (LR * gamma = new LR), PyTorch defaul
 THRESHOLD = 0.5 # Threshold for binary class prediction
 DICE_INCLUDE_BACKGROUND = True # TorchMetrics dice score calculation, default True
 ROOT_PATH_SAVE = "" # Path where results folder will be created
-CHECKPOINT_PATH = None # "C:/Users/kjosi/Python/UNet_training_results_4/checkpoint_9.pth"
-# Path to checkpoint file with saved model, optimizer and scheduler parameters
+CHECKPOINT_PATH = None # Path to checkpoint file with saved model, optimizer and scheduler parameters
 
 
 # SET DEVICE, RUN ON CUDA IF AVAILABLE 
@@ -306,6 +305,7 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
 
 
 
