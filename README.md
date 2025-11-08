@@ -4,9 +4,7 @@ This is a simple UNet implementation to run on your own computer or Google Colab
 <br>
 
 U-Net: Convolutional Networks for Biomedical Image Segmentation <br>
-Olaf Ronneberger, Philipp Fischer, Thomas Brox <br>
-Submitted on 18 May 2015 <br>
-<br>
+Olaf Ronneberger, Philipp Fischer, Thomas Brox - Submitted on 18 May 2015 <br>
 
 UNet for binary segmentation (background = 0, foreground = 255) <br>
 For this UNet implementation, the image masks must be binary with background = 0 and foreground = 1 <br>
@@ -45,7 +43,6 @@ CHECKPOINT_PATH: Path to checkpoint file with saved model, optimizer and schedul
 4. Check that the Python environment has all necessary packages installed, otherwise install them
 5. Run the UNet_PyTorch_training.py file
 6. The results will be stored in a new folder at the specified save path
-<br>
 
 ## Quick start to run using Google Colab
 
