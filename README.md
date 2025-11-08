@@ -5,13 +5,13 @@ This is a simple UNet implementation to run on your own computer or Google Colab
 
 ## Quick start to run on your own computer
 
-1. For this UNet implementation, the image masks must be binary with background = 0 and foreground = 1
+### 1. For this UNet implementation, the image masks must be binary with background = 0 and foreground = 1
 
-2. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this: 
+### 2. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this: 
 
 <img width="220" height="153" alt="Skjermbilde 2025-11-07 203630" src="https://github.com/user-attachments/assets/bc13a00d-c9f6-48e9-92b9-e4bf5317411a" />
 
-3. Download the four .py files to one folder:
+### 3. Download the four .py files to one folder:
 
 UNet_PyTorch_training.py <br>
 UNet_PyTorch_model.py <br>
@@ -19,11 +19,11 @@ UNet_PyTorch_dataset.py <br>
 UNet_PyTorch_utils.py <br>
 
 
-4. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables:
+### 4. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables:
 
 <img width="1244" height="429" alt="Skjermbilde 2025-11-07 210921" src="https://github.com/user-attachments/assets/f6d7a6ee-5748-44ec-83b6-3894e11579e3" />
 
-5. Check that the Python environment has all necessary packages installed, otherwise install them
+### 5. Check that the Python environment has all necessary packages installed, otherwise install them
 
 6. Run the UNet_PyTorch_training.py file
 
