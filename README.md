@@ -28,8 +28,11 @@ UNet_PyTorch_utils.py <br>
 
 ### 6. Run the UNet_PyTorch_training.py file
 
-### 7. The results will be stored in a new folder at the specified save path  
-  
+### 7. The results will be stored in a new folder at the specified save path
+\
+\
+\
+\
   
 ## Quick start to run using Google Colab
 
