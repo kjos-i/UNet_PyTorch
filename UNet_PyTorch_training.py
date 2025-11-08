@@ -26,7 +26,7 @@ TRANSFORM = "transform" # OR "transform_augmentation", but make sure it works on
 LIMIT = 200 # The nr of images included from dataset, to include all set value to None
 BATCH_SIZE = 10
 EPOCHS = 100
-INPUT_CHANNELS = 3 # Number of channels in input images
+INPUT_CHANNELS = 3 # Number of channels in input images, dataset class converts to RGB image
 NUM_CLASSES = 1 # For this inplementation the number of classes should be 1
 LEARNING_RATE = 0.001 # For AdamW optimizer learning rate (LR), PyTorch default 0.001
 WEIGHT_DECAY = 0.01 # For AdamW optimizer, PyTorch default 0.01
@@ -301,5 +301,6 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
 
 
