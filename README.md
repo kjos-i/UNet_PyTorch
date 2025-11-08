@@ -13,10 +13,10 @@ This is a simple UNet implementation to run on your own computer or Google Colab
 
 3. Download the four .py files to one folder:
 
-UNet_PyTorch_training.py
-UNet_PyTorch_model.py
-UNet_PyTorch_dataset.py
-UNet_PyTorch_utils.py
+UNet_PyTorch_training.py <br>
+UNet_PyTorch_model.py <br>
+UNet_PyTorch_dataset.py <br>
+UNet_PyTorch_utils.py <br>
 
 
 4. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables:
@@ -40,9 +40,9 @@ UNet_PyTorch_utils.py
 
 3. Download the three .py files:
 
-UNet_PyTorch_model.py
-UNet_PyTorch_dataset.py
-UNet_PyTorch_utils.py
+UNet_PyTorch_model.py <br>
+UNet_PyTorch_dataset.py <br>
+UNet_PyTorch_utils.py <br>
 
 4. Get a copy of the UNet_PyTorch_colab.ipynb file, store it in Google Drive - My Drive - Colab Notebooks and open and run it block by block in Google Colab
 
