@@ -56,3 +56,4 @@ UNet_PyTorch_utils.py <br>
 
 3. Get a copy of the UNet_PyTorch_colab.ipynb file, store it in Google Drive - My Drive - Colab Notebooks and open and run it block by block in Google Colab
 4. Remember to set the variables as explained under "Quick start to run on your own computer - point 3"
+5. The results will be stored in a new folder at the specified save path
