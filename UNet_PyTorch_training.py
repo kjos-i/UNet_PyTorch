@@ -18,6 +18,8 @@ from UNet_PyTorch_utils import val_image_mask, train_loss_iou_dice_acc_graph
 
 """
 UNet set up for segmentation of binary images (background = 0, class label = 1)
+Image is resized to 512 x 512 and converted to RGB
+Mask is resized to 512 x 512 and converted to grayscale
 """
 
 # SET VARIABLES
@@ -301,6 +303,7 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
 
 
 
