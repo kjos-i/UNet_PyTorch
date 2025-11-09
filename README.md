@@ -7,7 +7,7 @@ U-Net: Convolutional Networks for Biomedical Image Segmentation <br>
 Olaf Ronneberger, Philipp Fischer, Thomas Brox - Submitted on 18 May 2015 <br>
 
 UNet implementation for binary segmentation <br>
-The image masks must be binary with background = 0 and foreground = 1 <br>
+The image masks must be binary with background = 0 and foreground = 255 <br>
 Images are resized to 512 x 512 and converted to RGB <br>
 Masks are resized to 512 x 512 and converted to grayscale
 <br>
