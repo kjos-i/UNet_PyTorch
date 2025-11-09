@@ -10,7 +10,7 @@ Original image size used: 572x572
 This is a modified version of the UNet Model by Sovit Ranjan Rath, copied from:
 https://debuggercafe.com/unet-from-scratch-using-pytorch/
 
-Here implemented with padding (no cropping) and BatchNorm2d
+This version of UNet is implemented with padding (no cropping) and BatchNorm2d
 """
 
 def double_convolution(in_channels, out_channels):
@@ -80,3 +80,4 @@ if __name__ == '__main__':
     outputs = model(input_image)
     print(outputs.shape)
     
+
