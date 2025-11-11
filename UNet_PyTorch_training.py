@@ -278,7 +278,7 @@ info_names = ["Model", "Criterion", "Optimizer", "Weight decay", "LR scheduler",
               "LR gamma", "Input channels", "Number of classes", "Length dataset", "Training images", 
               "Validation images", "Limit", "Batch size", "Epochs", "Threshold", "Dice include background"]
 info_items = [model_name, criterion_name, optimizer_name, WEIGHT_DECAY, scheduler_name, LEARNING_RATE, 
-              LR_S_STEP_SIZE, LR_S_GAMMA, in_channels, num_classes, len(dataset), len(train_dataset), 
+              LR_S_STEP_SIZE, LR_S_GAMMA, INPUT_CHANNELS, NUM_CLASSES, len(dataset), len(train_dataset), 
               len(val_dataset), LIMIT, BATCH_SIZE, EPOCHS, THRESHOLD, DICE_INCLUDE_BACKGROUND]
 
 info_dict = {"Item": info_names, "Info": info_items}
@@ -292,4 +292,5 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
 
