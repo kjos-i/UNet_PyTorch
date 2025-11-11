@@ -17,24 +17,27 @@ from UNet_PyTorch_model import UNet
 from UNet_PyTorch_utils import val_image_mask, train_loss_iou_dice_acc_graph
 
 """
-UNet set up for segmentation of binary images (background = 0, foreground = 255)
-Images that are not 512 x 512 will be resized to 512 x 512 and converted to RGB
-Masks that are not 512 x 512 will be resized to 512 x 512 and converted to grayscale
+UNet implementation for binary segmentation (background, foreground)
+Image and mask size should be 512 x 512, see CHANGE_SIZE variable 
+Mask values should be binary (background=0 and foreground=1), see SCALE_MASK variable
 """
 
 # SET VARIABLES
-ROOT_PATH_DATASET = "" # Path to "dataset" folder  
-TRANSFORM = "transform" # OR "transform_augmentation", but make sure it works on dataset!!
+ROOT_PATH_DATASET = "" # Path to "dataset" folder
+AUGMENTATION = None # Options: None or "augmentation" (vertical and horizontal flips, each p=0.25)
+CHANGE_SIZE = None # Options: None, "center_crop" or "interpolation_nearest"
+SCALE_MASK = True # Scales pixel values from range [0, 255] to range [0.0, 1.0]
 LIMIT = 200 # The nr of images included from dataset, to include all set value to None
-BATCH_SIZE = 10
+BATCH_SIZE = 4
+PIN_MEMORY = True # Enables allocation of page-locked memory on the CPU for data fetched by DataLoader
 EPOCHS = 100
 INPUT_CHANNELS = 3 # Number of channels in input images, dataset class converts to RGB image
 NUM_CLASSES = 1 # For this inplementation the number of classes should be 1
-LEARNING_RATE = 0.001 # For AdamW optimizer learning rate (LR), PyTorch default 0.001
+LEARNING_RATE = 0.0001 # For AdamW optimizer learning rate (LR), PyTorch default 0.001
 WEIGHT_DECAY = 0.01 # For AdamW optimizer, PyTorch default 0.01
 LR_S_STEP_SIZE = 30 # For LR scheduler StepLR, nr of epochs before applying gamma decay
 LR_S_GAMMA = 0.1 # For LR scheduler StepLR (LR * gamma = new LR), PyTorch default 0.1
-THRESHOLD = 0.5 # Threshold for binary class prediction
+PROBABILITY = 0.5 # Threshold for binary class prediction
 DICE_INCLUDE_BACKGROUND = True # TorchMetrics dice score calculation, default True
 ROOT_PATH_SAVE = "" # Path where results folder will be created
 CHECKPOINT_PATH = None # Path to checkpoint file with saved model, optimizer and scheduler parameters
@@ -58,32 +61,23 @@ torch.cuda.empty_cache()
 
 
 # LOAD DATASET
-ROOT_PATH_DATASET = ROOT_PATH_DATASET
-TRANSFORM = TRANSFORM
-LIMIT = LIMIT
-dataset = MyDataset(root_path=ROOT_PATH_DATASET, transform=TRANSFORM, limit=LIMIT)
-generator = torch.Generator().manual_seed(55)
+dataset = MyDataset(root_path=ROOT_PATH_DATASET, augmentation=AUGMENTATION, change_size=CHANGE_SIZE,
+                    scale_mask=SCALE_MASK, limit=LIMIT)
 
+generator = torch.Generator().manual_seed(55)
 train_dataset, val_dataset = random_split(dataset, [0.8, 0.2], generator=generator)
 
-
-LEARNING_RATE = LEARNING_RATE
-BATCH_SIZE = BATCH_SIZE
-
 train_dataloader = DataLoader(dataset=train_dataset,
-                              pin_memory=False,
+                              pin_memory=PIN_MEMORY,
                               batch_size=BATCH_SIZE,
                               shuffle=True)
 val_dataloader = DataLoader(dataset=val_dataset,
-                              pin_memory=False,
+                              pin_memory=True,
                               batch_size=BATCH_SIZE,
                               shuffle=True)
 
 
 # SET MODEL COST FUNCTION, OPTIMIZER AND LEARNING RATE SCHEDULER
-INPUT_CHANNELS = INPUT_CHANNELS
-NUM_CLASSES = NUM_CLASSES
-
 model = UNet(input_channels=INPUT_CHANNELS, num_classes=NUM_CLASSES).to(device)
 criterion = nn.BCEWithLogitsLoss()
 optimizer = optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
@@ -102,7 +96,6 @@ scheduler_name = scheduler.__class__.__name__
 
 
 # SAVE RESULTS
-ROOT_PATH_SAVE = ROOT_PATH_SAVE
 save_directory = "UNet_training_results"
 save_path = os.path.join(ROOT_PATH_SAVE, save_directory)
 
@@ -117,8 +110,7 @@ else:
     os.mkdir(save_path)   
 
 
-# TRAIN AND EVALUATE
-EPOCHS = EPOCHS
+# TRAIN MODEL
 train_losses = []
 train_dices = []
 train_ious = []
@@ -196,8 +188,9 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
     print(f"Total number of images {(idx + 1) * BATCH_SIZE}")
     print(f"Items added to train_loss_sum per epoch {nr_of_train_loss_items}")
     print("-" * 5)
-   
+
     
+    # EVALUATE MODEL
     model.eval()
     val_loss_sum = 0
     val_iou_sum = 0
@@ -230,7 +223,6 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
             val_acc_sum += acc.item()
             nr_of_val_loss_items += 1
 
-            # SAVE IMAGES FOR SOME OF THE PREDICTIONS
             if idx == 0 and epoch > EPOCHS - 5:      
                 val_image_mask(save_path, epoch, idx, img, mask, prediction)
 
@@ -243,7 +235,6 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
         val_ious.append(val_iou)
         val_dices.append(val_dice)
         val_accs.append(val_acc)
-
 
         print(f"End of validation part of epoch {epoch + 1}")
         print(f"Batch size {BATCH_SIZE}, length train_dataset {len(val_dataset)}")
@@ -261,7 +252,6 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
     print(f"Validation IoU EPOCH {epoch + 1}: {val_iou:.4f}")
     print("-" * 50)
 
-
     checkpoint = {'epoch': epoch,
                   'model_state_dict': model.state_dict(),
                   'optimizer_state_dict': optimizer.state_dict(),
@@ -275,7 +265,6 @@ lists = [epochs_list, train_losses, val_losses, train_ious, val_ious,
          train_dices, val_dices, train_accs, val_accs, lr_updates]
 titles = ["Epoch", "Train loss", "Val loss", "Train IoU", "Val IoU", 
           "Train dice", "Val dice", "Train acc", "Val acc", "Updated LR"]
-#training_results_dictionary = dict([(key, value) for key, value in zip(titles, lists)])
 training_results_dictionary = dict(zip(titles, lists))
 df = pd.DataFrame(training_results_dictionary)
 df.to_csv((os.path.join(save_path, "training_dataframe.csv")), index=False)
@@ -303,13 +292,3 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
-
-
-
-
-
-
-
-
-
-
