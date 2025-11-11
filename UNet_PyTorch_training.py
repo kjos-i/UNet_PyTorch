@@ -37,7 +37,7 @@ LEARNING_RATE = 0.0001 # For AdamW optimizer learning rate (LR), PyTorch default
 WEIGHT_DECAY = 0.01 # For AdamW optimizer, PyTorch default 0.01
 LR_S_STEP_SIZE = 30 # For LR scheduler StepLR, nr of epochs before applying gamma decay
 LR_S_GAMMA = 0.1 # For LR scheduler StepLR (LR * gamma = new LR), PyTorch default 0.1
-PROBABILITY = 0.5 # Threshold for binary class prediction
+THRESHOLD = 0.5 # Threshold for binary class prediction
 DICE_INCLUDE_BACKGROUND = True # TorchMetrics dice score calculation, default True
 ROOT_PATH_SAVE = "" # Path where results folder will be created
 CHECKPOINT_PATH = None # Path to checkpoint file with saved model, optimizer and scheduler parameters
@@ -292,3 +292,4 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
 
 
 torch.cuda.empty_cache()
+
