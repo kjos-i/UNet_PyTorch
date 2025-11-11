@@ -24,10 +24,12 @@ UNet_PyTorch_dataset.py <br>
 UNet_PyTorch_utils.py <br>
 
 3. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables: <br>
-ROOT_PATH_DATASET: Path to "dataset" folder <br>
-TRANSFORM: "transform" OR "transform_augmentation", but make sure it works on dataset!! <br>
+AUGMENTATION = None # Options: None or "augmentation" (vertical and horizontal flips, each p=0.25) <br>
+CHANGE_SIZE = None # Options: None, "center_crop" or "interpolation_nearest" <br>
+SCALE_MASK = True # Scales pixel values from range [0, 255] to range [0.0, 1.0]
 LIMIT: The nr of images included from dataset, to include all set value to None <br>
 BATCH_SIZE <br>
+PIN_MEMORY = True # Enables allocation of page-locked memory on the CPU for data fetched by DataLoader
 EPOCHS <br>
 INPUT_CHANNELS: Number of channels in input images, dataset class converts to RGB image (3 channels) <br>
 NUM_CLASSES: For this inplementation the number of classes should be 1 <br>
