@@ -6,10 +6,9 @@ This is a simple UNet implementation to run on your own computer or Google Colab
 U-Net: Convolutional Networks for Biomedical Image Segmentation <br>
 Olaf Ronneberger, Philipp Fischer, Thomas Brox - Submitted on 18 May 2015 <br>
 
-UNet implementation for binary segmentation <br>
-The image masks must be binary with background = 0 and foreground = 255 <br>
-Images are resized to 512 x 512 and converted to RGB <br>
-Masks are resized to 512 x 512 and converted to grayscale
+UNet implementation for binary segmentation (background, foreground) <br>
+Image and mask size should be 512 x 512, see CHANGE_SIZE variable  <br>
+Mask values should be binary (background=0 and foreground=1), see SCALE_MASK variable <br>
 <br>
 
 ## Quick start to run on your own computer 
