@@ -25,7 +25,7 @@ UNet_PyTorch_utils.py <br>
 3. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables: <br>
 AUGMENTATION = None # Options: None or "augmentation" (vertical and horizontal flips, each p=0.25) <br>
 CHANGE_SIZE = None # Options: None, "center_crop" or "interpolation_nearest" <br>
-SCALE_MASK = True # Scales pixel values from range [0, 255] to range [0.0, 1.0]
+SCALE_MASK = True # Scales pixel values from range [0, 255] to range [0.0, 1.0] <br>
 LIMIT: The nr of images included from dataset, to include all set value to None <br>
 BATCH_SIZE <br>
 PIN_MEMORY = True # Enables allocation of page-locked memory on the CPU for data fetched by DataLoader
