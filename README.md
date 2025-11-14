@@ -1,7 +1,6 @@
 # UNet implementation using PyTorch
 
-This is a simple UNet implementation to run on your own computer or Google Colab
-<br>
+This is a simple UNet implementation to run on your own computer or Google Colab <br>
 
 U-Net: Convolutional Networks for Biomedical Image Segmentation <br>
 Olaf Ronneberger, Philipp Fischer, Thomas Brox - Submitted on 18 May 2015 <br>
