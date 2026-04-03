@@ -24,11 +24,11 @@ from UNet_PyTorch_utils import val_image_mask, train_loss_iou_dice_acc_graph
 
 
 # SET VARIABLES
-ROOT_PATH_IMGS = "C:/Users/kjosi/Python/mito1024_dataset/train_imgs_512/"
-ROOT_PATH_MASKS = "C:/Users/kjosi/Python/mito1024_dataset/train_masks_512/"
+ROOT_PATH_IMGS = ""
+ROOT_PATH_MASKS = ""
 AUGMENTATION = None # Options: None or "augmentation" (vertical and horizontal flips, each p=0.25)
 CHANGE_SIZE = None # Options: None, "center_crop" or "interpolation_nearest"
-SCALE_MASK = False # Options True or False, scales pixel values from range [0, 255] to range [0.0, 1.0]
+SCALE_MASK = True # Options True or False, scales pixel values from range [0, 255] to range [0.0, 1.0]
 LIMIT = 10 # The nr of images included from dataset, to include all set value to None
 BATCH_SIZE = 2
 PIN_MEMORY = True # Enables allocation of page-locked memory on the CPU for data fetched by DataLoader
@@ -43,11 +43,11 @@ LR_S_STEP_SIZE = 30 # For LR scheduler StepLR, nr of epochs before applying gamm
 LR_S_GAMMA = 0.1 # For LR scheduler StepLR (LR * gamma = new LR), PyTorch default 0.1
 THRESHOLD = 0.5 # Threshold for binary class prediction
 DICE_INCLUDE_BACKGROUND = True # TorchMetrics dice score calculation, default True
-ROOT_PATH_SAVE = "C:/Users/kjosi/Python/" # Path where results folder will be created
+ROOT_PATH_SAVE = "" # Path where results folder will be created
 CHECKPOINT_PATH = None # Path to checkpoint file with saved model, optimizer and scheduler parameters
 SAVE_CHECKPOINT = 5 # Save checkpoint every n epochs, set to EPOCHS to save only at the end
 TENSORBOARD = False # True: Use tensorboard, False: Don't use tensorboard
-ROOT_PATH_LOGS = "C:/Users/kjosi/Python/tensorboard_logs/" # Path to folder for tensorboard logs
+ROOT_PATH_LOGS = "" # Path to folder for tensorboard logs
 
 
 # IF TENSORBOARED IS USED, IMPORT SUMMARYWRITER
