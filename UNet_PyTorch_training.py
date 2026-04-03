@@ -303,7 +303,7 @@ print("-" * 50)
 # PANDAS DATAFRAME WITH GENERAL INFO
 info_names = ["Model", "Criterion", "Optimizer", "Weight decay", "LR scheduler", "LR start", "LR step size", 
               "LR gamma", "Input channels", "Number of classes", "Length dataset", "Training images", 
-              "Validation images", "Limit", "Batch size", "Epochs", "Probability", "Dice include background"]
+              "Validation images", "Limit", "Batch size", "Epochs", "Threshold"]
 info_items = [model_name, criterion_name, optimizer_name, WEIGHT_DECAY, scheduler_name, LEARNING_RATE, 
               LR_S_STEP_SIZE, LR_S_GAMMA, INPUT_CHANNELS, NUM_CLASSES, len(dataset), len(train_dataset), 
               len(val_dataset), LIMIT, BATCH_SIZE, EPOCHS, THRESHOLD]
