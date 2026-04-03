@@ -1,3 +1,9 @@
+"""
+UNet implementation for binary segmentation (background, foreground)
+Image and mask size should be 512 x 512, see CHANGE_SIZE variable 
+Mask values should be binary (background=0 and foreground=1), see SCALE_MASK variable
+"""
+
 import torch
 from torch.utils.data import DataLoader, random_split
 from torch import optim, nn
@@ -16,31 +22,38 @@ from UNet_PyTorch_dataset import MyDataset
 from UNet_PyTorch_model import UNet
 from UNet_PyTorch_utils import val_image_mask, train_loss_iou_dice_acc_graph
 
-"""
-UNet implementation for binary segmentation (background, foreground)
-Image and mask size should be 512 x 512, see CHANGE_SIZE variable 
-Mask values should be binary (background=0 and foreground=1), see SCALE_MASK variable
-"""
 
 # SET VARIABLES
-ROOT_PATH_DATASET = "" # Path to "dataset" folder
+ROOT_PATH_IMGS = "C:/Users/kjosi/Python/mito1024_dataset/train_imgs_512/"
+ROOT_PATH_MASKS = "C:/Users/kjosi/Python/mito1024_dataset/train_masks_512/"
 AUGMENTATION = None # Options: None or "augmentation" (vertical and horizontal flips, each p=0.25)
 CHANGE_SIZE = None # Options: None, "center_crop" or "interpolation_nearest"
-SCALE_MASK = True # Scales pixel values from range [0, 255] to range [0.0, 1.0]
-LIMIT = 200 # The nr of images included from dataset, to include all set value to None
-BATCH_SIZE = 4
+SCALE_MASK = False # Options True or False, scales pixel values from range [0, 255] to range [0.0, 1.0]
+LIMIT = 10 # The nr of images included from dataset, to include all set value to None
+BATCH_SIZE = 2
 PIN_MEMORY = True # Enables allocation of page-locked memory on the CPU for data fetched by DataLoader
-EPOCHS = 100
-INPUT_CHANNELS = 3 # Number of channels in input images, dataset class converts to RGB image
-NUM_CLASSES = 1 # For this inplementation the number of classes should be 1
+EPOCHS = 2
+INPUT_CHANNELS = 1 # Number of channels in input images
+IMG_CONVERT = 'L' # Options: 'L' for gray scale or 'RGB' for color channels
+NUM_CLASSES = 1 # For this UNet implementation the number of classes should be 1
+NUM_CLASSES = 1 # For this UNet implementation the number of classes should be 1
 LEARNING_RATE = 0.0001 # For AdamW optimizer learning rate (LR), PyTorch default 0.001
-WEIGHT_DECAY = 0.01 # For AdamW optimizer, PyTorch default 0.01
+WEIGHT_DECAY = 0.01 # For AdamW optimizer, PyTorch default 0.01, L2 regularization
 LR_S_STEP_SIZE = 30 # For LR scheduler StepLR, nr of epochs before applying gamma decay
 LR_S_GAMMA = 0.1 # For LR scheduler StepLR (LR * gamma = new LR), PyTorch default 0.1
 THRESHOLD = 0.5 # Threshold for binary class prediction
 DICE_INCLUDE_BACKGROUND = True # TorchMetrics dice score calculation, default True
-ROOT_PATH_SAVE = "" # Path where results folder will be created
+ROOT_PATH_SAVE = "C:/Users/kjosi/Python/" # Path where results folder will be created
 CHECKPOINT_PATH = None # Path to checkpoint file with saved model, optimizer and scheduler parameters
+SAVE_CHECKPOINT = 5 # Save checkpoint every n epochs, set to EPOCHS to save only at the end
+TENSORBOARD = False # True: Use tensorboard, False: Don't use tensorboard
+ROOT_PATH_LOGS = "C:/Users/kjosi/Python/tensorboard_logs/" # Path to folder for tensorboard logs
+
+
+# IF TENSORBOARED IS USED, IMPORT SUMMARYWRITER
+if TENSORBOARD == True:
+    from torch.utils.tensorboard import SummaryWriter
+    writer = SummaryWriter(log_dir=ROOT_PATH_LOGS)
 
 
 # SET DEVICE, RUN ON CUDA IF AVAILABLE 
@@ -61,8 +74,13 @@ torch.cuda.empty_cache()
 
 
 # LOAD DATASET
-dataset = MyDataset(root_path=ROOT_PATH_DATASET, augmentation=AUGMENTATION, change_size=CHANGE_SIZE,
-                    scale_mask=SCALE_MASK, limit=LIMIT)
+dataset = MyDataset(root_path_imgs=ROOT_PATH_IMGS,
+                    root_path_masks=ROOT_PATH_MASKS,
+                    img_convert=IMG_CONVERT,
+                    augmentation=AUGMENTATION,
+                    change_size=CHANGE_SIZE,
+                    scale_mask=SCALE_MASK,
+                    limit=LIMIT)
 
 generator = torch.Generator().manual_seed(55)
 train_dataset, val_dataset = random_split(dataset, [0.8, 0.2], generator=generator)
@@ -72,7 +90,7 @@ train_dataloader = DataLoader(dataset=train_dataset,
                               batch_size=BATCH_SIZE,
                               shuffle=True)
 val_dataloader = DataLoader(dataset=val_dataset,
-                              pin_memory=True,
+                              pin_memory=PIN_MEMORY,
                               batch_size=BATCH_SIZE,
                               shuffle=True)
 
@@ -141,7 +159,7 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
     for idx, img_mask in enumerate(tqdm(train_dataloader, "BATCH TRAIN", position=0, leave=True)):
         img = img_mask[0].float().to(device)
         mask = img_mask[1].float().to(device)
-        
+    
         mask_pred = model(img)
         optimizer.zero_grad()
 
@@ -180,7 +198,12 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
     train_ious.append(train_iou)
     train_dices.append(train_dice)
     train_accs.append(train_acc)
-    
+
+    if TENSORBOARD == True:
+        writer.add_scalar('Loss/train', train_loss, epoch)
+        writer.add_scalar('IoU/train', train_iou, epoch)
+        writer.flush()
+
     print(f"End of training part of epoch {epoch + 1}")
     print(f"Updated learning rate: {updated_lr}")
     print(f"Batch size {BATCH_SIZE}, length train_dataset {len(train_dataset)}")
@@ -188,7 +211,7 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
     print(f"Total number of images {(idx + 1) * BATCH_SIZE}")
     print(f"Items added to train_loss_sum per epoch {nr_of_train_loss_items}")
     print("-" * 5)
-
+   
     
     # EVALUATE MODEL
     model.eval()
@@ -197,7 +220,7 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
     val_dice_sum = 0
     val_acc_sum = 0
     nr_of_val_loss_items = 0
-    
+
     with torch.no_grad():
         for idx, img_mask in enumerate(tqdm(val_dataloader, "BATCH VAL", position=0, leave=True)):
             img = img_mask[0].float().to(device)
@@ -224,7 +247,8 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
             nr_of_val_loss_items += 1
 
             if idx == 0 and epoch > EPOCHS - 5:      
-                val_image_mask(save_path, epoch, idx, img, mask, prediction)
+                val_image_mask(save_path, epoch, idx, img, mask, prediction,
+                               img_convert=IMG_CONVERT)
 
         val_loss = val_loss_sum / len(val_dataloader)
         val_iou = val_iou_sum / len(val_dataloader)
@@ -235,6 +259,11 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
         val_ious.append(val_iou)
         val_dices.append(val_dice)
         val_accs.append(val_acc)
+
+        if TENSORBOARD == True:
+            writer.add_scalar('Loss/val', val_loss, epoch)
+            writer.add_scalar('IoU/val', val_iou, epoch)
+            writer.flush()
 
         print(f"End of validation part of epoch {epoch + 1}")
         print(f"Batch size {BATCH_SIZE}, length train_dataset {len(val_dataset)}")
@@ -252,11 +281,12 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
     print(f"Validation IoU EPOCH {epoch + 1}: {val_iou:.4f}")
     print("-" * 50)
 
-    checkpoint = {'epoch': epoch,
-                  'model_state_dict': model.state_dict(),
-                  'optimizer_state_dict': optimizer.state_dict(),
-                  'scheduler_state_dict': scheduler.state_dict()}
-    torch.save(checkpoint, (os.path.join(save_path, f"checkpoint_{epoch + 1}.pth")))
+    if (epoch + 1) % SAVE_CHECKPOINT == 0:
+        checkpoint = {'epoch': epoch,
+                    'model_state_dict': model.state_dict(),
+                    'optimizer_state_dict': optimizer.state_dict(),
+                    'scheduler_state_dict': scheduler.state_dict()}
+        torch.save(checkpoint, (os.path.join(save_path, f"checkpoint_{epoch + 1}.pth")))
 
 
 # PANDAS DATAFRAME WITH TRAINING RESULTS
@@ -276,7 +306,7 @@ print("-" * 50)
 # PANDAS DATAFRAME WITH GENERAL INFO
 info_names = ["Model", "Criterion", "Optimizer", "Weight decay", "LR scheduler", "LR start", "LR step size", 
               "LR gamma", "Input channels", "Number of classes", "Length dataset", "Training images", 
-              "Validation images", "Limit", "Batch size", "Epochs", "Threshold", "Dice include background"]
+              "Validation images", "Limit", "Batch size", "Epochs", "Probability", "Dice include background"]
 info_items = [model_name, criterion_name, optimizer_name, WEIGHT_DECAY, scheduler_name, LEARNING_RATE, 
               LR_S_STEP_SIZE, LR_S_GAMMA, INPUT_CHANNELS, NUM_CLASSES, len(dataset), len(train_dataset), 
               len(val_dataset), LIMIT, BATCH_SIZE, EPOCHS, THRESHOLD, DICE_INCLUDE_BACKGROUND]
@@ -291,6 +321,7 @@ loss_iou_dice_acc_graph = train_loss_iou_dice_acc_graph(save_path, epochs_list, 
                                   train_ious, val_ious, train_dices, val_dices, train_accs, val_accs)
 
 
+if TENSORBOARD == True:
+    writer.close()
+
 torch.cuda.empty_cache()
-
-

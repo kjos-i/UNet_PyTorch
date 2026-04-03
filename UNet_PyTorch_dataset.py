@@ -6,13 +6,25 @@ from PIL import Image
 
 
 class MyDataset(Dataset):
-    def __init__(self, root_path, augmentation, change_size, scale_mask, limit):
+    def __init__(self, 
+                 root_path_imgs,
+                 root_path_masks, 
+                 img_convert,
+                 augmentation, 
+                 change_size,
+                 scale_mask,
+                 limit
+    ):
+        
         super().__init__()
         
-        self.root_path = root_path
+        self.root_path_imgs = root_path_imgs
+        self.root_path_masks = root_path_masks
+        self.img_convert = img_convert
         self.limit = limit
-        self.image_list = sorted([root_path + "/train_imgs/" + i for i in os.listdir(root_path + "/train_imgs/")])[:self.limit]
-        self.mask_list = sorted([root_path + "/train_masks/" + i for i in os.listdir(root_path + "/train_masks/")])[:self.limit]
+        self.image_list = sorted([os.path.join(root_path_imgs, i) for i in os.listdir(root_path_imgs)])[:self.limit]
+        self.mask_list = sorted([os.path.join(root_path_masks, i) for i in os.listdir(root_path_masks)])[:self.limit]
+        
         self.augmentation = augmentation
         self.change_size = change_size
 
@@ -29,7 +41,7 @@ class MyDataset(Dataset):
 
 
     def __getitem__(self, index):
-        img = Image.open(self.image_list[index]).convert("RGB")
+        img = Image.open(self.image_list[index]).convert(self.img_convert)
         mask = Image.open(self.mask_list[index]).convert("L")
         
         if self.augmentation == 'augmentation':
@@ -49,5 +61,3 @@ class MyDataset(Dataset):
             self.limit = len(self.image_list)
 
         return min(len(self.image_list), self.limit)
-
-

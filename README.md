@@ -21,32 +21,14 @@ UNet_PyTorch_model.py <br>
 UNet_PyTorch_dataset.py <br>
 UNet_PyTorch_utils.py <br>
 
-3. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set these variables: <br>
-AUGMENTATION = None # Options: None or "augmentation" (vertical and horizontal flips, each p=0.25) <br>
-CHANGE_SIZE = None # Options: None, "center_crop" or "interpolation_nearest" <br>
-SCALE_MASK = True # Scales pixel values from range [0, 255] to range [0.0, 1.0] <br>
-LIMIT: The nr of images included from dataset, to include all set value to None <br>
-BATCH_SIZE <br>
-PIN_MEMORY = True # Enables allocation of page-locked memory on the CPU for data fetched by DataLoader
-EPOCHS <br>
-INPUT_CHANNELS: Number of channels in input images, dataset class converts to RGB image (3 channels) <br>
-NUM_CLASSES: For this inplementation the number of classes should be 1 <br>
-LEARNING_RATE: For AdamW optimizer learning rate (LR), PyTorch default 0.001 <br>
-WEIGHT_DECAY: For AdamW optimizer, PyTorch default 0.01 <br>
-LR_S_STEP_SIZE: For LR scheduler StepLR, nr of epochs before applying gamma decay <br>
-LR_S_GAMMA: For LR scheduler StepLR (LR * gamma = new LR), PyTorch default 0.1 <br>
-THRESHOLD: Threshold for binary class prediction <br>
-DICE_INCLUDE_BACKGROUND: TorchMetrics dice score calculation, default True <br>
-ROOT_PATH_SAVE: Path where results folder will be created <br>
-CHECKPOINT_PATH: Path to checkpoint file with saved model, optimizer and scheduler parameters (optional) <br>
-
+3. Open the UNet_PyTorch_training.py file in an editor (for example VS Code) and set the variables
 4. Check that the Python environment has all necessary packages installed, otherwise install them
 5. Run the UNet_PyTorch_training.py file
 6. The results will be stored in a new folder at the specified save path
 
 ## Quick start to run using Google Colab
 
-1. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this on Google Drive: 
+1. Make sure to have a separate test dataset. Arrange your training dataset (training and validation combined) like this on Google Drive: <br>
 <img width="441" height="238" alt="Skjermbilde 2025-11-07 213123" src="https://github.com/user-attachments/assets/1ad221b3-15d9-45e2-813f-2218b8f8c08e" />
 
 2. Download the three .py files:

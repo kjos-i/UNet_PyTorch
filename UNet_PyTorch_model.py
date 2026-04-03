@@ -1,6 +1,3 @@
-import torch
-import torch.nn as nn
-
 """
 U-Net: Convolutional Networks for Biomedical Image Segmentation
 Olaf Ronneberger, Philipp Fischer, Thomas Brox
@@ -12,6 +9,10 @@ https://debuggercafe.com/unet-from-scratch-using-pytorch/
 
 This version of UNet is implemented with padding (no cropping) and BatchNorm2d
 """
+
+import torch
+import torch.nn as nn
+
 
 def double_convolution(in_channels, out_channels):
     double_conv = nn.Sequential(nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1),
@@ -79,5 +80,3 @@ if __name__ == '__main__':
     print(f"{total_trainable_params:,} training parameters.")
     outputs = model(input_image)
     print(outputs.shape)
-    
-

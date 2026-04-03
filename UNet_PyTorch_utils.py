@@ -33,8 +33,29 @@ def train_loss_iou_dice_acc_graph(save_path, epochs_list, train_losses, val_loss
     plt.show()
 
 
+# Graphs showing test results over indices for loss, IoU, Dice and accuracy
+def test_loss_iou_dice_acc_graph(save_path, idx_list, test_losses, 
+                                  test_ious, test_dices, test_accs):
+    fig, axes = plt.subplots(2, 2, constrained_layout=True, figsize=(10, 8))
+    ax1, ax2, ax3, ax4 = axes.flatten()
+    ax1.plot(idx_list, test_losses, label='Test Loss', lw=3)
+    ax2.plot(idx_list, test_ious, label='Test IoU', lw=3)
+    ax3.plot(idx_list, test_dices, label='Test Dice', lw=3)
+    ax4.plot(idx_list, test_accs, label='Test Accuracy', lw=3)
+
+    ax1.set_title("Loss over indices", fontsize=14); ax2.set_title('IoU over indices', fontsize=14)
+    ax3.set_title("Dice over indices", fontsize=14); ax4.set_title('Accuracy over indices', fontsize=14)
+    ax1.set_ylabel("Loss"); ax2.set_ylabel("IoU"); ax3.set_ylabel("Dice"); ax4.set_ylabel("Accuracy")
+    ax1.set_xlabel("Indices"); ax2.set_xlabel("Indices"); ax3.set_xlabel("Indices"); ax4.set_xlabel("Indices")
+    ax2.set_ylim(0, 1); ax3.set_ylim(0, 1); ax4.set_ylim(0, 1)
+    ax1.legend(); ax2.legend(); ax3.legend(); ax4.legend()
+    fig.suptitle("Test graphs", fontsize=16)
+    plt.savefig(os.path.join(save_path, "test_loss_iou_dice_acc_graph.png"))
+    plt.show()
+
+
 # Examples from validation of image, mask and prediction
-def val_image_mask(save_path, epoch, idx, img, mask, prediction):
+def val_image_mask(save_path, epoch, idx, img, mask, prediction, img_convert):
     """
     1: Split: Split batch dimension
     2: Squeeze: Remove batch dimension
@@ -58,7 +79,10 @@ def val_image_mask(save_path, epoch, idx, img, mask, prediction):
     img, mask, prediction = img.detach().cpu(), mask.detach().cpu(), prediction.detach().cpu()
 
     fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(12, 5), constrained_layout=True) 
-    ax1.imshow(img)
+    if img_convert == 'L':
+        ax1.imshow(img, cmap='gray')
+    else:
+        ax1.imshow(img)
     ax1.set_title(f"Real Image, epoch {epoch}, index {idx}")
     ax1.set_axis_off()
     ax2.imshow(mask)
@@ -69,3 +93,45 @@ def val_image_mask(save_path, epoch, idx, img, mask, prediction):
     ax3.set_axis_off()
     fig.suptitle("Examples from validation", fontsize=16)
     plt.savefig(os.path.join(save_path, f"image_mask_val_{epoch}_{idx}.png"))
+
+
+# Examples from test of image, mask and prediction
+def test_image_mask(save_path, idx, img, mask, prediction, img_convert):
+    """
+    1: Split: Split batch dimension
+    2: Squeeze: Remove batch dimension
+    3: Resize: Restore size to original image size
+    4: Permute: Channel in last position
+    5: Send to cpu
+    6: Create and save plot (first example from each batch)
+    """
+    img = (torch.split(img, 1, dim=0)) 
+    mask = (torch.split(mask, 1, dim=0))
+    prediction = (torch.split(prediction, 1, dim=0))
+    
+    img = torch.squeeze(img[0], dim=0)
+    mask = torch.squeeze(mask[0], dim=0)
+    prediction = torch.squeeze(prediction[0], dim=0)
+    
+    img = torch.permute(img, (1, 2, 0))
+    mask = torch.permute(mask, (1, 2, 0))
+    prediction = torch.permute(prediction, (1, 2, 0))
+    
+    img, mask, prediction = img.detach().cpu(), mask.detach().cpu(), prediction.detach().cpu()
+
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(12, 5), constrained_layout=True) 
+    if img_convert == 'L':
+        ax1.imshow(img, cmap='gray')
+    else:
+        ax1.imshow(img)
+    ax1.set_title(f"Real Image, index {idx}")
+    ax1.set_axis_off()
+    ax2.imshow(mask)
+    ax2.set_title(f"Segmented Mask, index {idx}")
+    ax2.set_axis_off()
+    ax3.imshow(prediction)
+    ax3.set_title(f"Predicted Mask, index {idx}")
+    ax3.set_axis_off()
+    fig.suptitle("Examples from test", fontsize=16)
+    plt.savefig(os.path.join(save_path, f"image_mask_test_{idx}.png"))
+    
