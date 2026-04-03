@@ -306,7 +306,7 @@ info_names = ["Model", "Criterion", "Optimizer", "Weight decay", "LR scheduler",
               "Validation images", "Limit", "Batch size", "Epochs", "Probability", "Dice include background"]
 info_items = [model_name, criterion_name, optimizer_name, WEIGHT_DECAY, scheduler_name, LEARNING_RATE, 
               LR_S_STEP_SIZE, LR_S_GAMMA, INPUT_CHANNELS, NUM_CLASSES, len(dataset), len(train_dataset), 
-              len(val_dataset), LIMIT, BATCH_SIZE, EPOCHS, THRESHOLD, DICE_INCLUDE_BACKGROUND]
+              len(val_dataset), LIMIT, BATCH_SIZE, EPOCHS, THRESHOLD]
 
 info_dict = {"Item": info_names, "Info": info_items}
 info_df = pd.DataFrame(info_dict)
