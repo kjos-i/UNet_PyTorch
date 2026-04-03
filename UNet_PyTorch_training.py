@@ -9,8 +9,7 @@ from torch.utils.data import DataLoader, random_split
 from torch import optim, nn
 import torch.optim as optim
 import torch.optim.lr_scheduler as lr_scheduler
-import torchmetrics
-from torchmetrics.segmentation import DiceScore
+from torchmetrics.classification import BinaryJaccardIndex, BinaryAccuracy, BinaryF1Score
 
 from tqdm import tqdm
 import pandas as pd
@@ -28,21 +27,19 @@ ROOT_PATH_IMGS = ""
 ROOT_PATH_MASKS = ""
 AUGMENTATION = None # Options: None or "augmentation" (vertical and horizontal flips, each p=0.25)
 CHANGE_SIZE = None # Options: None, "center_crop" or "interpolation_nearest"
-SCALE_MASK = True # Options True or False, scales pixel values from range [0, 255] to range [0.0, 1.0]
-LIMIT = 10 # The nr of images included from dataset, to include all set value to None
+SCALE_MASK = False # Options True or False, scales pixel values from range [0, 255] to range [0.0, 1.0]
+LIMIT = 20 # The nr of images included from dataset, to include all set value to None
 BATCH_SIZE = 2
 PIN_MEMORY = True # Enables allocation of page-locked memory on the CPU for data fetched by DataLoader
-EPOCHS = 2
+EPOCHS = 10
 INPUT_CHANNELS = 1 # Number of channels in input images
 IMG_CONVERT = 'L' # Options: 'L' for gray scale or 'RGB' for color channels
-NUM_CLASSES = 1 # For this UNet implementation the number of classes should be 1
 NUM_CLASSES = 1 # For this UNet implementation the number of classes should be 1
 LEARNING_RATE = 0.0001 # For AdamW optimizer learning rate (LR), PyTorch default 0.001
 WEIGHT_DECAY = 0.01 # For AdamW optimizer, PyTorch default 0.01, L2 regularization
 LR_S_STEP_SIZE = 30 # For LR scheduler StepLR, nr of epochs before applying gamma decay
 LR_S_GAMMA = 0.1 # For LR scheduler StepLR (LR * gamma = new LR), PyTorch default 0.1
 THRESHOLD = 0.5 # Threshold for binary class prediction
-DICE_INCLUDE_BACKGROUND = True # TorchMetrics dice score calculation, default True
 ROOT_PATH_SAVE = "" # Path where results folder will be created
 CHECKPOINT_PATH = None # Path to checkpoint file with saved model, optimizer and scheduler parameters
 SAVE_CHECKPOINT = 5 # Save checkpoint every n epochs, set to EPOCHS to save only at the end
@@ -148,9 +145,11 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
     train_acc_sum = 0
     nr_of_train_loss_items = 0
 
-    jaccardindex = torchmetrics.JaccardIndex(task='binary').to(device) 
-    dice_segmentation = DiceScore(num_classes=1, include_background=DICE_INCLUDE_BACKGROUND).to(device)
-    accuracy = torchmetrics.Accuracy(task='binary').to(device)
+    
+    jaccardindex = BinaryJaccardIndex(threshold=THRESHOLD).to(device)
+    # In binary segmentation, F1 and Dice are exactly the same formula
+    dice_segmentation = BinaryF1Score(threshold=THRESHOLD).to(device)
+    accuracy = BinaryAccuracy(threshold=THRESHOLD).to(device)
 
     print("-" * 50)
     print(f"Beginning of epoch {epoch + 1}")
@@ -169,12 +168,11 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
         prediction[prediction < THRESHOLD] = 0
         prediction[prediction >= THRESHOLD] = 1
         
-        prediction_int = prediction.long()
         mask_int = mask.long()
 
-        iou = jaccardindex(prediction_int, mask_int)
-        dice = dice_segmentation(prediction_int, mask_int)
-        acc = accuracy(prediction_int, mask_int)
+        iou = jaccardindex(prediction, mask_int)
+        dice = dice_segmentation(prediction, mask_int)
+        acc = accuracy(prediction, mask_int)
         
         train_loss_sum += loss.item() 
         train_iou_sum += iou.item()
@@ -233,12 +231,11 @@ for epoch in tqdm(range(EPOCHS), "EPOCHS"):
             prediction[prediction < THRESHOLD] = 0
             prediction[prediction >= THRESHOLD] = 1
 
-            prediction_int = prediction.long()
             mask_int = mask.long()
             
-            iou = jaccardindex(prediction_int, mask_int)
-            dice = dice_segmentation(prediction_int, mask_int)
-            acc = accuracy(prediction_int, mask_int)
+            iou = jaccardindex(prediction, mask_int)
+            dice = dice_segmentation(prediction, mask_int)
+            acc = accuracy(prediction, mask_int)
 
             val_loss_sum += loss.item()
             val_iou_sum += iou.item()
