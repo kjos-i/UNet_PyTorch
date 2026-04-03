@@ -28,16 +28,16 @@ ROOT_PATH_MASKS = ""
 AUGMENTATION = None # Options: None or "augmentation" (vertical and horizontal flips, each p=0.25)
 CHANGE_SIZE = None # Options: None, "center_crop" or "interpolation_nearest"
 SCALE_MASK = False # Options True or False, scales pixel values from range [0, 255] to range [0.0, 1.0]
-LIMIT = 20 # The nr of images included from dataset, to include all set value to None
-BATCH_SIZE = 2
+LIMIT = None # The nr of images included from dataset, to include all set value to None
+BATCH_SIZE = 8
 PIN_MEMORY = True # Enables allocation of page-locked memory on the CPU for data fetched by DataLoader
-EPOCHS = 10
+EPOCHS = 100
 INPUT_CHANNELS = 1 # Number of channels in input images
 IMG_CONVERT = 'L' # Options: 'L' for gray scale or 'RGB' for color channels
 NUM_CLASSES = 1 # For this UNet implementation the number of classes should be 1
 LEARNING_RATE = 0.0001 # For AdamW optimizer learning rate (LR), PyTorch default 0.001
 WEIGHT_DECAY = 0.01 # For AdamW optimizer, PyTorch default 0.01, L2 regularization
-LR_S_STEP_SIZE = 30 # For LR scheduler StepLR, nr of epochs before applying gamma decay
+LR_S_STEP_SIZE = 1000 # For LR scheduler StepLR, nr of epochs before applying gamma decay
 LR_S_GAMMA = 0.1 # For LR scheduler StepLR (LR * gamma = new LR), PyTorch default 0.1
 THRESHOLD = 0.5 # Threshold for binary class prediction
 ROOT_PATH_SAVE = "" # Path where results folder will be created
